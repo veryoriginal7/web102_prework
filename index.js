@@ -72,7 +72,7 @@ addGamesToPage(GAMES_JSON);
 */
 
 // grab the contributions card element
-// const contributionsCard = document.getElementById("num-contributions");
+const contributionsCard = document.getElementById("num-contributions");
 
 // use reduce() to count the number of total contributions by summing the backers
 
@@ -81,13 +81,13 @@ addGamesToPage(GAMES_JSON);
 
 
 // grab the amount raised card, then use reduce() to find the total amount raised
-// const raisedCard = document.getElementById("total-raised");
+const raisedCard = document.getElementById("total-raised");
 
 // set inner HTML using template literal
 
 
 // grab number of games card and set its inner HTML
-// const gamesCard = document.getElementById("num-games");
+const gamesCard = document.getElementById("num-games");
 
 
 /*************************************************************************************
@@ -167,18 +167,19 @@ const sortedGames =  GAMES_JSON.sort( (item1, item2) => {
     return item2.pledged - item1.pledged;
 });
 
-const contributionsCard = GAMES_JSON.reduce((total , game)=>{return total +game.backers},0);
-
-const raisedCard = GAMES_JSON.reduce((total,game)=>{return total+game.pledged},0);
-
-const gamesCard = GAMES_JSON.length;
+const ContributionsCard = GAMES_JSON.reduce((total , game)=>{return total +game.backers},0);
+contributionsCard.innerText = ContributionsCard.toLocaleString();
+const RaisedCard = GAMES_JSON.reduce((total,game)=>{return total+game.pledged},0);
+raisedCard.innerText = `$${RaisedCard.toLocaleString()}`;
+const GamesCard = GAMES_JSON.length;
+gamesCard.innerText = GamesCard.toLocaleString();
 const uGames = GAMES_JSON.filter(game => game.pledged < game.goal);
 
-console.log(contributionsCard);
-console.log(raisedCard);
-console.log(gamesCard);
+console.log(ContributionsCard);
+console.log(RaisedCard);
+console.log(GamesCard);
 
-const displayStr = `A total of $${raisedCard.toLocaleString()} has been raised for ${gamesCard.toLocaleString()}, ${uGames.length > 1?  uGames.length.toLocaleString() + " games remain unfunded":" game remains unfunded"}. We need your help to fund these amazing games! `;
+const displayStr = `A total of $${RaisedCard.toLocaleString()} has been raised for ${GamesCard.toLocaleString()}, ${uGames.length > 1?  uGames.length.toLocaleString() + " games remain unfunded":" game remains unfunded"}. We need your help to fund these amazing games! `;
 // use destructuring and the spread operator to grab the first and second games
 
 console.log(displayStr);
@@ -187,8 +188,14 @@ displayDiv.innerHTML = `<p>${displayStr}</p>`;
 descriptionContainer.appendChild(displayDiv);
 
 const [mostfund, secondMostFund, ...rest] = sortedGames;
+const FirstGames = document.createElement("div");
+FirstGames.innerText = mostfund.name;
+firstGameContainer.appendChild(FirstGames);
 console.log(mostfund.name);
 console.log(secondMostFund.name);
+const SecondGames = document.createElement("div");
+SecondGames.innerText = secondMostFund.name;
+secondGameContainer.appendChild(SecondGames);
 // create a new element to hold the name of the top pledge game, then append it to the correct element
 
 // do the same for the runner up item
